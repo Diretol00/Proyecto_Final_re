@@ -2,12 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Misc"/>
+	<classpathentry kind="src" path="JConnector_"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ACER/Documents/ITLA/C3/Programación I/Java conector/MySQL Java Connector/mysql-connector-java-8.0.27.jar">
+	<classpathentry kind="lib" path="JConnector_/mysql-connector-java-8.0.27.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

@@ -89,7 +89,7 @@ public class Inventario extends JFrame {
 					i.printStackTrace();
 			}
 		setTitle("Inventario");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 546, 496);
 		setResizable(false);
 		contentPane = new JPanel();

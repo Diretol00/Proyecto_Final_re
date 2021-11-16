@@ -46,7 +46,6 @@ public class AgregarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public AgregarUsuario() {
-		setType(Type.UTILITY);
 		setTitle("Agregar Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 506, 290);

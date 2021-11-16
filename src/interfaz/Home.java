@@ -98,6 +98,8 @@ public class Home extends JFrame {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Cliente");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				info.lblNewLabel_2_1.setText(lblNewLabel_2_1.getText());
+				
 				info.setVisible(true);
 				info.setLocationRelativeTo(null);
 			}

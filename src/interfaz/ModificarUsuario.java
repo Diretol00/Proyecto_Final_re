@@ -54,7 +54,6 @@ public class ModificarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public ModificarUsuario() {
-		setType(Type.UTILITY);
 		setTitle("Modificar Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 506, 290);
