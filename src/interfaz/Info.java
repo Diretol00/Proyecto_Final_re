@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
 public class Info extends JFrame {
 
 	private JPanel contentPane;
+	public Image profile_img = new ImageIcon(this.getClass().getResource("/1.png")).getImage();
 
 	/**
 	 * Launch the application.
@@ -44,6 +46,7 @@ public class Info extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(profile_img));
 		lblNewLabel.setBounds(82, 0, 181, 163);
 		contentPane.add(lblNewLabel);
 		

@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.ImageIcon;
@@ -17,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class Home extends JFrame {
 
 	private JPanel contentPane;
-	
+	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
 	public Info info = new Info();
 
 	/**
@@ -60,6 +62,7 @@ public class Home extends JFrame {
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(background));
 		lblNewLabel.setBounds(0, -10, 459, 426);
 		panel.add(lblNewLabel);
 		

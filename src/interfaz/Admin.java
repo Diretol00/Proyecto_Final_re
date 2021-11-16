@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -22,7 +24,7 @@ public class Admin extends JFrame {
 
 	private JPanel contentPane;
 	public Inventario inventario = new Inventario();
-	
+	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
 	public VerUsuario frameuser = new VerUsuario();
 
 	/**
@@ -83,6 +85,7 @@ public class Admin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(background));
 		lblNewLabel.setBounds(0, 0, 459, 426);
 		contentPane.add(lblNewLabel);
 		

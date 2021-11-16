@@ -9,7 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
@@ -29,7 +32,6 @@ public class Login extends JFrame {
 	private JLabel lblpass;
 	private JButton btningresar;
 	private JButton btncancelar;
-	
 	public Admin admin = new Admin();
 	public Home home = new Home();
 	public AgregarCliente agregarCliente = new AgregarCliente();
