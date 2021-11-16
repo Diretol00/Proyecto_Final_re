@@ -83,7 +83,6 @@ public class Admin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(Admin.class.getResource("/imagenes/bg.png")));
 		lblNewLabel.setBounds(0, 0, 459, 426);
 		contentPane.add(lblNewLabel);
 		

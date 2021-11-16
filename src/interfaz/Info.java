@@ -44,7 +44,6 @@ public class Info extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Info.class.getResource("/imagenes/1.png")));
 		lblNewLabel.setBounds(82, 0, 181, 163);
 		contentPane.add(lblNewLabel);
 		

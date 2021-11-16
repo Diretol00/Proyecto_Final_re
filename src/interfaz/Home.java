@@ -60,7 +60,6 @@ public class Home extends JFrame {
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(Home.class.getResource("/imagenes/bg.png")));
 		lblNewLabel.setBounds(0, -10, 459, 426);
 		panel.add(lblNewLabel);
 		
