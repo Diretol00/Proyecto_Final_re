@@ -25,6 +25,7 @@ public class Admin extends JFrame {
 	private JPanel contentPane;
 	public Inventario inventario = new Inventario();
 	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
+	public JLabel lblNewLabel_2_1;
 	public VerUsuario frameuser = new VerUsuario();
 
 	/**
@@ -95,5 +96,15 @@ public class Admin extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblNewLabel_1.setBounds(42, 343, 382, 70);
 		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Bienvenido:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(10, 10, 89, 13);
+		contentPane.add(lblNewLabel_2);
+		
+		lblNewLabel_2_1 = new JLabel("/");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2_1.setBounds(94, 11, 89, 13);
+		contentPane.add(lblNewLabel_2_1);
 	}
 }

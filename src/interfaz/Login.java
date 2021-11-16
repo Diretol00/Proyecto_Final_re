@@ -36,6 +36,7 @@ public class Login extends JFrame {
 	public Home home = new Home();
 	public AgregarCliente agregarCliente = new AgregarCliente();
 	public AgregarAdmin agregarAdministrador = new AgregarAdmin();
+	public String userName;
 	private JPasswordField txtpass;
 	
 
@@ -151,6 +152,9 @@ public class Login extends JFrame {
 							JOptionPane.showMessageDialog(null, "Usuario no existe!");
 						}
 					}
+					userName = txtuser.getText();
+					home.lblNewLabel_2_1.setText(userName);
+					admin.lblNewLabel_2_1.setText(userName);
 					cnn.close();
 				}
 					catch(ClassNotFoundException x) {

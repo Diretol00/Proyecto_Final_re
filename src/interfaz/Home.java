@@ -20,6 +20,7 @@ public class Home extends JFrame {
 
 	private JPanel contentPane;
 	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
+	public JLabel lblNewLabel_2_1;
 	public Info info = new Info();
 
 	/**
@@ -75,6 +76,16 @@ public class Home extends JFrame {
 		btncsesion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btncsesion.setBounds(156, 360, 145, 30);
 		panel.add(btncsesion);
+		
+		JLabel lblNewLabel_2 = new JLabel("Bienvenido:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(10, 10, 89, 13);
+		panel.add(lblNewLabel_2);
+		
+		lblNewLabel_2_1 = new JLabel("/");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2_1.setBounds(94, 11, 89, 13);
+		panel.add(lblNewLabel_2_1);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 459, 24);
