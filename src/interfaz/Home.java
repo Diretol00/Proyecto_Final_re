@@ -13,8 +13,12 @@ import javax.swing.JMenuBar;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class Home extends JFrame {
 
@@ -22,6 +26,8 @@ public class Home extends JFrame {
 	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
 	public JLabel lblNewLabel_2_1;
 	public Info info = new Info();
+	
+	public Comprar comprar = new Comprar();
 
 	/**
 	 * Launch the application.
@@ -68,11 +74,28 @@ public class Home extends JFrame {
 		panel.add(lblNewLabel);
 		
 		JButton btncomprar = new JButton("Comprar");
+		btncomprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comprar.setVisible(true);
+				comprar.setLocationRelativeTo(null);
+			}
+		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btncomprar.setBounds(180, 317, 98, 30);
 		panel.add(btncomprar);
 		
 		JButton btncsesion = new JButton("Cerrar Sesi\u00F3n");
+		btncsesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opt = JOptionPane.showConfirmDialog(contentPane,"Al cerrar sesión saldrás"
+						+ " de la aplicación,  ¿Estás seguro que quieres salir de "
+						+ "la aplicación?","Salir de la app", JOptionPane.YES_NO_OPTION);
+				
+				if(opt == 0) {
+					System.exit(0);
+				}
+			}
+		});
 		btncsesion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btncsesion.setBounds(156, 360, 145, 30);
 		panel.add(btncsesion);
