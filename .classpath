@@ -13,5 +13,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="Misc/jakarta.mail.jar"/>
+	<classpathentry kind="lib" path="Misc/jakarta.activation-1.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -27,6 +27,8 @@ public class Home extends JFrame {
 	public JLabel lblNewLabel_2_1;
 	public Info info = new Info();
 	
+	String userName;
+	
 	public Comprar comprar = new Comprar();
 
 	/**
@@ -78,6 +80,8 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				comprar.setVisible(true);
 				comprar.setLocationRelativeTo(null);
+				userName = lblNewLabel_2_1.getText();
+				comprar.lblusername.setText(userName);
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 14));
