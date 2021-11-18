@@ -27,28 +27,23 @@ public class Comprar extends JFrame {
 
 	private JPanel contentPane;
 	public static JTable table;
-	JPanel panel1;
-	
-	DefaultTableModel modelo = new DefaultTableModel() {
+	public JPanel panel1;
+	public DefaultTableModel modelo = new DefaultTableModel() {
 		 public boolean isCellEditable(int row, int column) {
 		       return false;
 		    }
 	};
-	private JLabel lblnom;
-	private JLabel lblprecio;
-	private JLabel lblmarca;
-	private JLabel lblmodel;
-	private JLabel lblexis;
-	public static JTextField txtnom, txtprecio, txtmarca, txtmodel, txtexis;
-	
+
+	public String b_nombre;
+	public String b_precio;
+	public String b_marca;
+	public String b_modelo;
+	public String b_existencias;
 	public static int filaseleccionada;
 	private JButton btncomprar;
 	private JButton btnlimpiar;
-	
-	public ComprarExtension ce = new ComprarExtension();
-	
 	public String nombre, precio, marca, modelox,userName;
-	 JLabel lblusername;
+	public JLabel lblusername;
 
 
 	/**
@@ -86,7 +81,7 @@ public class Comprar extends JFrame {
 		panel1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 229, 483, 178);
+		scrollPane.setBounds(20, 23, 483, 384);
 		panel1.add(scrollPane);
 		
 		table = new JTable(modelo);
@@ -100,111 +95,45 @@ public class Comprar extends JFrame {
 		
 		scrollPane.setViewportView(table);
 		
-		lblnom = new JLabel("Nombre");
-		lblnom.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblnom.setBounds(20, 23, 67, 27);
-		panel1.add(lblnom);
-		
-		lblprecio = new JLabel("Precio");
-		lblprecio.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblprecio.setBounds(20, 56, 67, 27);
-		panel1.add(lblprecio);
-		
-		lblmarca = new JLabel("Marca");
-		lblmarca.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblmarca.setBounds(20, 93, 67, 27);
-		panel1.add(lblmarca);
-		
-		lblmodel = new JLabel("Modelo");
-		lblmodel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblmodel.setBounds(20, 130, 67, 27);
-		panel1.add(lblmodel);
-		
-		lblexis = new JLabel("Existencias");
-		lblexis.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblexis.setBounds(20, 167, 84, 27);
-		panel1.add(lblexis);
-		
-		txtnom = new JTextField();
-		txtnom.setEditable(false);
-		txtnom.setBounds(97, 24, 137, 27);
-		panel1.add(txtnom);
-		txtnom.setColumns(10);
-		
-		txtprecio = new JTextField();
-		txtprecio.setEditable(false);
-		txtprecio.setColumns(10);
-		txtprecio.setBounds(97, 61, 137, 27);
-		panel1.add(txtprecio);
-		
-		txtmarca = new JTextField();
-		txtmarca.setEditable(false);
-		txtmarca.setColumns(10);
-		txtmarca.setBounds(97, 98, 137, 27);
-		panel1.add(txtmarca);
-		
-		txtmodel = new JTextField();
-		txtmodel.setEditable(false);
-		txtmodel.setColumns(10);
-		txtmodel.setBounds(97, 135, 137, 27);
-		panel1.add(txtmodel);
-		
-		txtexis = new JTextField();
-		txtexis.setEditable(false);
-		txtexis.setColumns(10);
-		txtexis.setBounds(97, 172, 137, 27);
-		panel1.add(txtexis);
-		
-		JButton btnmostrar = new JButton("Mostrar");
-		btnmostrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SeleccionarDatos();
-			}
-		});
-		btnmostrar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnmostrar.setBounds(189, 418, 137, 35);
-		panel1.add(btnmostrar);
-		
-		btncomprar = new JButton("Comprar");
+		btncomprar = new JButton("Agregar al carrito");
 		btncomprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ce.setVisible(true);
-				ce.setLocationRelativeTo(null);
-				
-				nombre = txtnom.getText();
-				precio = txtprecio.getText();
-				marca = txtmarca.getText();
-				modelox = txtmodel.getText();
-				
-				ce.txtnom1.setText(nombre);
-				ce.txtprecio1.setText(precio);
-				ce.txtmarca1.setText(marca);
-				ce.txtmodel1.setText(modelox);
-				
-				userName = lblusername.getText();
-				ce.lblusern.setText(userName);
+				try {
+					filaseleccionada = table.getSelectedRow();
+					
+					if(filaseleccionada == -1) {
+						JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun producto");
+					}else {
+						b_nombre = (String) table.getValueAt(filaseleccionada, 0);
+						b_precio = (String) table.getValueAt(filaseleccionada, 1);
+						b_marca = (String) table.getValueAt(filaseleccionada, 2);
+						b_modelo = (String) table.getValueAt(filaseleccionada, 3);
+						b_existencias = (String) table.getValueAt(filaseleccionada, 4);
+						
+						System.out.println(b_nombre);
+						JOptionPane.showMessageDialog(null, "Agregado al carrito!");
+					}
+				}catch(Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btncomprar.setBounds(42, 418, 137, 35);
+		btncomprar.setBounds(42, 418, 216, 35);
 		panel1.add(btncomprar);
 		
-		btnlimpiar = new JButton("Limpiar");
+		btnlimpiar = new JButton("Volver a comprar");
 		btnlimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			txtnom.setText("");
-			txtprecio.setText("");
-			txtmarca.setText("");
-			txtmodel.setText("");
-			txtexis.setText("");
+				Comprar.this.dispose();
 			}
 		});
 		btnlimpiar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnlimpiar.setBounds(334, 417, 137, 35);
+		btnlimpiar.setBounds(268, 417, 203, 35);
 		panel1.add(btnlimpiar);
 		
 		lblusername = new JLabel("");
-		lblusername.setBounds(30, 204, 67, 18);
+		lblusername.setBounds(404, 23, 113, 18);
 		panel1.add(lblusername);
 		
 		LlenarTabla();
@@ -224,9 +153,7 @@ public class Comprar extends JFrame {
 			java.sql.Statement stm = cnn.createStatement();
 		
 			ResultSet rs =  stm.executeQuery("Select * from producto");
-		
-		
-		
+
 			while(rs.next()==true) {
 				String nom = rs.getString("nombre");
 				String precio = rs.getString("precio");
@@ -236,7 +163,6 @@ public class Comprar extends JFrame {
 	
 				modelo.addRow(new Object[] {nom,"US$"+precio,marca,model,exis});
 		}
-			
 			cnn.close();
 		}
 			catch(ClassNotFoundException e1) {
@@ -246,28 +172,4 @@ public class Comprar extends JFrame {
 			}
 	}
 	
-	
-	public static void SeleccionarDatos() {
-		try{
-            filaseleccionada = table.getSelectedRow();
-            if (filaseleccionada == -1){
-                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun producto");
-            } else {
- 
-                String nom = (String)table.getValueAt(filaseleccionada, 0);
-                String precio = (String)table.getValueAt(filaseleccionada, 1);
-                String marca = (String)table.getValueAt(filaseleccionada, 2);
-                String model = (String)table.getValueAt(filaseleccionada, 3);
-                String exis = (String)table.getValueAt(filaseleccionada, 4);
-                
-                txtnom.setText(nom);
-                txtprecio.setText(precio);
-                txtmarca.setText(marca);
-                txtmodel.setText(model);
-                txtexis.setText(exis);
-            }
-            
-        }catch (Exception ex){
-        }
-	}
 }

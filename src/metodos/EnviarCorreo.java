@@ -13,8 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public interface EnviarCorreo {
-	public default void enviar() {
-		String para = "tefira9783@elastit.com";
+	public default void enviar(String to, String mes) {
 		String de = "mobile.paradise.prueba@gmail.com";
 		String host = "smtp.gmail.com";
 		
@@ -38,9 +37,10 @@ public interface EnviarCorreo {
 			MimeMessage msg = new MimeMessage(session);
 			
 			msg.setFrom(new InternetAddress(de));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(para));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			msg.setSubject("Compra");
-			msg.setText("123 Prueba");
+			msg.setText(mes);
+			
 			
 			Transport.send(msg);
 			System.out.println("Sent!");

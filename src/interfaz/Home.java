@@ -26,10 +26,10 @@ public class Home extends JFrame {
 	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
 	public JLabel lblNewLabel_2_1;
 	public Info info = new Info();
-	
-	String userName;
-	
+	public Carrito carrito = new Carrito();
+	public String userName;
 	public Comprar comprar = new Comprar();
+	
 
 	/**
 	 * Launch the application.
@@ -60,7 +60,22 @@ public class Home extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		
 		JButton btncarrito = new JButton("Carrito");
+		btncarrito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carrito.setVisible(true);
+				carrito.setLocationRelativeTo(null);
+
+				carrito.modelo.addRow(new Object[] {comprar.b_nombre, comprar.b_precio, comprar.b_marca, comprar.b_modelo});
+				
+				carrito.l_nombre = comprar.b_nombre;
+				carrito.l_precio = comprar.b_precio;
+				carrito.l_marca = comprar.b_marca;
+				carrito.l_modelo = comprar.b_modelo;
+			}
+		});
 		btncarrito.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btncarrito.setBounds(364, 34, 85, 31);
 		contentPane.add(btncarrito);
@@ -80,6 +95,8 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				comprar.setVisible(true);
 				comprar.setLocationRelativeTo(null);
+				
+				
 				userName = lblNewLabel_2_1.getText();
 				comprar.lblusername.setText(userName);
 			}

@@ -13,6 +13,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import metodos.EnviarCorreo;
 
@@ -29,19 +30,21 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.Properties;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
-public class ComprarExtension extends JFrame implements EnviarCorreo {
+public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 
 	private JPanel contentPane;
-	JTextField txtnom1,txtprecio1,txtmarca1,txtmodel1;
-	JTextField txtcorreo,txtarjeta,txtexp,txtcvv;
-	JLabel lblusern;
-
+	public JTextField txtcorreo,txtarjeta,txtexp,txtcvv;
+	public String s_nombre, s_precio, s_marca, s_modelo;
+	public JLabel lblusern;
+	private JScrollPane scrollPane;
+	public JTable table;
+	public String bMsg;
 	
-	
-
-
 	/**
 	 * Launch the application.
 	 */
@@ -49,7 +52,7 @@ public class ComprarExtension extends JFrame implements EnviarCorreo {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ComprarExtension frame = new ComprarExtension();
+					ConfirmarCompra frame = new ConfirmarCompra();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,8 +64,8 @@ public class ComprarExtension extends JFrame implements EnviarCorreo {
 	/**
 	 * Create the frame.
 	 */
-	public ComprarExtension() {
-		Comprar.SeleccionarDatos();
+	public ConfirmarCompra() {
+		setTitle("Confirmar Compra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 421, 516);
 		contentPane = new JPanel();
@@ -70,44 +73,9 @@ public class ComprarExtension extends JFrame implements EnviarCorreo {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel1 = new JPanel();
-		panel1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel1.setBounds(26, 56, 358, 129);
-		contentPane.add(panel1);
-		panel1.setLayout(null);
-		
-		txtnom1 = new JTextField();
-		txtnom1.setEditable(false);
-		txtnom1.setColumns(10);
-		txtnom1.setBounds(25, 20, 137, 27);
-		panel1.add(txtnom1);
-		
-		txtprecio1 = new JTextField();
-		txtprecio1.setEditable(false);
-		txtprecio1.setColumns(10);
-		txtprecio1.setBounds(197, 72, 137, 27);
-		panel1.add(txtprecio1);
-		
-		txtmarca1 = new JTextField();
-		txtmarca1.setEditable(false);
-		txtmarca1.setColumns(10);
-		txtmarca1.setBounds(197, 20, 137, 27);
-		panel1.add(txtmarca1);
-		
-		txtmodel1 = new JTextField();
-		txtmodel1.setEditable(false);
-		txtmodel1.setColumns(10);
-		txtmodel1.setBounds(25, 72, 137, 27);
-		panel1.add(txtmodel1);
-		
-		JLabel lbltitulo = new JLabel("Atriculo a comprar");
-		lbltitulo.setBounds(121, 10, 164, 36);
-		contentPane.add(lbltitulo);
-		lbltitulo.setFont(new Font("Tahoma", Font.BOLD, 17));
-		
 		JPanel panel2 = new JPanel();
 		panel2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Informaci\u00F3n personal para compra", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel2.setBounds(26, 211, 358, 184);
+		panel2.setBounds(32, 226, 352, 169);
 		contentPane.add(panel2);
 		panel2.setLayout(null);
 		
@@ -151,10 +119,10 @@ public class ComprarExtension extends JFrame implements EnviarCorreo {
 		txtcvv.setBounds(197, 133, 130, 26);
 		panel2.add(txtcvv);
 		
-		JButton btncomprar = new JButton("Confirmar compra");
+		JButton btncomprar = new JButton("Comprar");
 		btncomprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				enviar();
+				enviar(txtcorreo.getText(), bMsg);
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -169,6 +137,13 @@ public class ComprarExtension extends JFrame implements EnviarCorreo {
 		lblusern = new JLabel("");
 		lblusern.setBounds(311, 10, 73, 23);
 		contentPane.add(lblusern);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 10, 352, 205);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		
 	}
