@@ -1,6 +1,9 @@
 package metodos;
 
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -11,9 +14,17 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
+
+import interfaz.ConfirmarCompra;
+
 
 public interface EnviarCorreo {
+
+
+
 	public default void enviar(String to, String mes) {
+		
 		String de = "mobile.paradise.prueba@gmail.com";
 		String host = "smtp.gmail.com";
 		
@@ -32,6 +43,7 @@ public interface EnviarCorreo {
 				return new PasswordAuthentication(props.getProperty("username"), props.getProperty("password"));
 			}
 		});
+			
 		
 		try {
 			MimeMessage msg = new MimeMessage(session);
@@ -43,10 +55,29 @@ public interface EnviarCorreo {
 			
 			
 			Transport.send(msg);
+			JOptionPane.showMessageDialog(null, "Ha recibido un correo con los detalles de su compra, Gracias!");
 			System.out.println("Sent!");
+			
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				String url = "jdbc:mysql://localhost/proyectofinal";
+				String usr = "root";
+				String password = "";
+				java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+				Statement stm = con.createStatement();
+				
+				stm.executeUpdate("Delete from carrito");
+				
+				con.close();
+				
+			}catch(ClassNotFoundException ex) {
+			}catch (SQLException f) {
+				f.printStackTrace();
+			}
 			
 		}catch(MessagingException f) {
 			f.printStackTrace();
 		}
+		
 	}
 }

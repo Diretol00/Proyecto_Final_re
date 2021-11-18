@@ -3,13 +3,19 @@ package interfaz;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import metodos.Conectar;
+import metodos.ConectarCarrito;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -44,8 +50,9 @@ public class Comprar extends JFrame {
 	private JButton btnlimpiar;
 	public String nombre, precio, marca, modelox,userName;
 	public JLabel lblusername;
+	
 
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -66,6 +73,8 @@ public class Comprar extends JFrame {
 	 * Create the frame.
 	 */
 	public Comprar() {
+		
+		
 		setTitle("Comprar");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 561, 532);
@@ -110,14 +119,21 @@ public class Comprar extends JFrame {
 						b_modelo = (String) table.getValueAt(filaseleccionada, 3);
 						b_existencias = (String) table.getValueAt(filaseleccionada, 4);
 						
+						
+						
 						System.out.println(b_nombre);
 						JOptionPane.showMessageDialog(null, "Agregado al carrito!");
+						
 					}
+					
+					InsertarCarrito();
+					
 				}catch(Exception ex) {
 					ex.printStackTrace();
 				}
 			}
 		});
+		
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btncomprar.setBounds(42, 418, 216, 35);
 		panel1.add(btncomprar);
@@ -161,7 +177,7 @@ public class Comprar extends JFrame {
 				String model = rs.getString("modelo");
 				String exis = rs.getString("existencias");
 	
-				modelo.addRow(new Object[] {nom,"US$"+precio,marca,model,exis});
+				modelo.addRow(new Object[] {nom,precio,marca,model,exis});
 		}
 			cnn.close();
 		}
@@ -171,5 +187,26 @@ public class Comprar extends JFrame {
 				i.printStackTrace();
 			}
 	}
+	
+	public void InsertarCarrito() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			
+			stm.executeUpdate("INSERT INTO carrito (nombre_usuario, nombre_producto, marca_producto, modelo_producto, precio_producto)" +
+					"VALUES ('"+lblusername.getText()+"','"+b_nombre+"','"+b_marca+"','"+b_modelo+"','"+b_precio+"');");
+			
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+		}catch (SQLException f) {
+			f.printStackTrace();
+		}
+     }
+	
 	
 }

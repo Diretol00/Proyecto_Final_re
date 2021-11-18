@@ -67,13 +67,15 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				carrito.setVisible(true);
 				carrito.setLocationRelativeTo(null);
+				carrito.modelo.setRowCount(0);
+				carrito.LlenarTabla();
 
-				carrito.modelo.addRow(new Object[] {comprar.b_nombre, comprar.b_precio, comprar.b_marca, comprar.b_modelo});
+				/*carrito.modelo.addRow(new Object[] {comprar.b_nombre, comprar.b_precio, comprar.b_marca, comprar.b_modelo});
 				
 				carrito.l_nombre = comprar.b_nombre;
 				carrito.l_precio = comprar.b_precio;
 				carrito.l_marca = comprar.b_marca;
-				carrito.l_modelo = comprar.b_modelo;
+				carrito.l_modelo = comprar.b_modelo;*/
 			}
 		});
 		btncarrito.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -150,5 +152,8 @@ public class Home extends JFrame {
 		});
 		minfo.add(mntmNewMenuItem_2);
 	}
+	
+	
+	
 
 }

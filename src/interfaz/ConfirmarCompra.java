@@ -8,10 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,18 +17,12 @@ import metodos.EnviarCorreo;
 
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.Properties;
-import java.util.Vector;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -44,6 +36,17 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 	private JScrollPane scrollPane;
 	public JTable table;
 	public String bMsg;
+	public static int cont, cont1;
+	
+	public DefaultTableModel modelo = new DefaultTableModel() {
+		 public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+	};
+	
+	Comprar comp = new Comprar();
+	
+
 	
 	/**
 	 * Launch the application.
@@ -122,7 +125,7 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		JButton btncomprar = new JButton("Comprar");
 		btncomprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				enviar(txtcorreo.getText(), bMsg);
+				enviar(txtcorreo.getText(), bMsg);	
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -142,9 +145,66 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		scrollPane.setBounds(32, 10, 352, 205);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
+		table = new JTable(modelo);
 		scrollPane.setViewportView(table);
+		modelo.addColumn("Nombre");
+		modelo.addColumn("Precio");
+		modelo.addColumn("Marca");
+		modelo.addColumn("Modelo");
+		
+		
 		
 		
 	}
+	
+void LlenarTabla(){
+		modelo.setRowCount(0);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
+			java.sql.Statement stm = cnn.createStatement();
+		
+			ResultSet rs =  stm.executeQuery("Select * from carrito");
+
+			while(rs.next()==true) {
+				String nombre = rs.getString("nombre_producto");
+            	int precio = rs.getInt("precio_producto");
+            	String marca = rs.getString("marca_producto");
+            	String model = rs.getString("modelo_producto");
+            	
+            	modelo.addRow(new Object[] {nombre,precio,marca,model});
+		}
+			cnn.close();
+		}
+			catch(ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}catch(SQLException i) {
+				i.printStackTrace();
+			}
+        }
+
+
+public void BorrarCarrito() {
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		String url = "jdbc:mysql://localhost/proyectofinal";
+		String usr = "root";
+		String password = "";
+		java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+		Statement stm = con.createStatement();
+		
+		stm.executeUpdate("Delete from carrito");
+		
+		con.close();
+		
+	}catch(ClassNotFoundException ex) {
+	}catch (SQLException f) {
+		f.printStackTrace();
+	}
+ }
 }
