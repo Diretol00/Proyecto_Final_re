@@ -100,6 +100,7 @@ public class Home extends JFrame {
 				
 				
 				userName = lblNewLabel_2_1.getText();
+				carrito.lblNewLabel_1.setText(userName);
 				comprar.lblusername.setText(userName);
 			}
 		});

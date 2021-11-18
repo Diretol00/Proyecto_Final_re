@@ -18,7 +18,7 @@ public class ConectarCarrito{
 	            con = DriverManager.getConnection(
 	                    "jdbc:mysql://localhost:3306/proyectofinal?autoReconnect=true&" +
 	                            "user=root&password=");
-	            System.out.println("Conexion exitosa");
+//	            System.out.println("Conexion exitosa");
 	        }
 
 	        return con;

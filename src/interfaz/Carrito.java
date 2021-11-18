@@ -20,7 +20,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.awt.event.ActionEvent;
@@ -32,11 +34,16 @@ public class Carrito extends JFrame {
 	public DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {"Nombre", "Precio", "Marca", "Modelo"});
 	public ConfirmarCompra ce = new ConfirmarCompra();
 	public JTable table;
-	public String l_nombre;
-	public String l_precio;
-	public String l_marca;
-	public String l_modelo;
-	public String l_existencias;
+	public String nombre;
+	public String precio;
+	public String marca;
+	public String modelof;
+	public SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	public Date date = new Date();
+	public ArrayList<String> lista_n = new ArrayList<String>();
+	public ArrayList<String> lista_p = new ArrayList<String>();
+	public ArrayList<String> lista_m = new ArrayList<String>();
+	public ArrayList<String> lista_mod = new ArrayList<String>();
 	public JLabel lblNewLabel_1;
 	
 	Conectar conec = new Conectar();
@@ -90,18 +97,24 @@ public class Carrito extends JFrame {
 					
 					java.sql.Statement stm = cnn.createStatement();
 				
-					ResultSet rs =  stm.executeQuery("Select * from carrito");
+					ResultSet rs =  stm.executeQuery("Select * from carrito where nombre_usuario = '"+lblNewLabel_1.getText()+"'");
 
 					while(rs.next()==true) {
-						String nombre = rs.getString("nombre_producto");
-		            	int precio = rs.getInt("precio_producto");
-		            	String marca = rs.getString("marca_producto");
-		            	String model = rs.getString("modelo_producto");
+						nombre = rs.getString("nombre_producto");
+		            	precio = rs.getString("precio_producto");
+		            	marca = rs.getString("marca_producto");
+		            	modelof = rs.getString("modelo_producto");
 		            	
-		            	ce.bMsg = "------ Detalles ------\nProducto: " + nombre + "\nPrecio: "
-								+ ""+ precio + "\nMarca:" + marca + "\nModelo: "+ model + "\nID de Compra: " + rnd.nextInt(9999) + 
-								"\n----------------------" + "\nGracias por confiar en Mobile Paradise";
-				}
+		            	lista_n.add(nombre);
+		            	lista_p.add("$"+ precio);
+		            	lista_m.add(marca);
+		            	lista_mod.add(modelof);
+		            	
+		            	
+//		            	System.out.println("");
+		            	ce.bMsg = "-------- Factura --------\n" + "Productos: " + lista_n.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Precios: " + lista_p.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Marca: " + lista_m.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Modelos: " + lista_mod.toString().replaceAll("[\\[\\](){}]", "") + "\n-------------------------\n" + "Gracias por confiar en Mobile Paradise\n" + "Fecha de compra: "+format.format(date);
+					}
+					
 					cnn.close();
 				}
 					catch(ClassNotFoundException e1) {
@@ -131,13 +144,14 @@ public class Carrito extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setVisible(false);
 		lblNewLabel_1.setBounds(170, 21, 254, 14);
 		contentPane.add(lblNewLabel_1);
 	}
 	
 	
 	void LlenarTabla(){
-		
+		modelo.setRowCount(0);
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/proyectofinal";

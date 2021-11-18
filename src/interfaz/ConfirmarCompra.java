@@ -45,9 +45,7 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 	};
 	
 	Comprar comp = new Comprar();
-	
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -151,9 +149,6 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		modelo.addColumn("Precio");
 		modelo.addColumn("Marca");
 		modelo.addColumn("Modelo");
-		
-		
-		
 		
 	}
 	
