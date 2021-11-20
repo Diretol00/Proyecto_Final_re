@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -25,7 +27,6 @@ public class CambiarContrasenha extends JFrame {
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
-	private JLabel lblNewLabel_2;
 
 	/**
 	 * Launch the application.
@@ -85,28 +86,7 @@ public class CambiarContrasenha extends JFrame {
 		JButton btnNewButton = new JButton("Cambiar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String usr = "root";
-					String password = "";
-					java.sql.Connection con = DriverManager.getConnection(url, usr, password);
-					Statement stm = con.createStatement();
-					ResultSet rs = stm.executeQuery("select contrasenha from usuario where nombre_usuario='"+lblNewLabel_1.getText()+"' and contrasenha='"+passwordField.getText()+"'");
-					
-					if(rs.next() && passwordField_1.getText().trim().equals(passwordField_2.getText().trim())) {
-						stm.executeUpdate("update usuario set contrasenha='"+passwordField_1.getText()+"' where nombre_usuario='"+lblNewLabel_1.getText()+"'");
-						lblNewLabel_2.setVisible(true);
-					}
-					passwordField.setText("");
-					passwordField_1.setText("");
-					passwordField_2.setText("");
-					con.close();
-					
-				}catch(ClassNotFoundException ex) {
-				}catch (SQLException f) {
-					f.printStackTrace();
-				}
+				
 			}
 		});
 		btnNewButton.setBounds(10, 84, 132, 23);
@@ -116,12 +96,35 @@ public class CambiarContrasenha extends JFrame {
 		lblNewLabel_1.setVisible(false);
 		lblNewLabel_1.setBounds(10, 126, 282, 14);
 		contentPane.add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel("Contrase\u00F1a cambiada con exito!");
-		lblNewLabel_2.setForeground(Color.GREEN);
-		lblNewLabel_2.setVisible(false);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(152, 88, 212, 14);
-		contentPane.add(lblNewLabel_2);
+	}
+	
+	
+	
+	public void CambiarClave(){
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("select contrasenha from usuario where nombre_usuario='"+lblNewLabel_1.getText()+"' and contrasenha='"+passwordField.getText()+"'");
+			
+			if(rs.next() && passwordField_1.getText().trim().equals(passwordField_2.getText().trim())) {
+				stm.executeUpdate("update usuario set contrasenha='"+passwordField_1.getText()+"' where nombre_usuario='"+lblNewLabel_1.getText()+"'");
+				JOptionPane.showMessageDialog(null, "Clave cambiada correctamente");
+				passwordField.setText("");
+				passwordField_1.setText("");
+				passwordField_2.setText("");
+			}else {
+				JOptionPane.showMessageDialog(null, "Las claves no coinciden");
+			}
+			
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+		}catch (SQLException f) {
+			f.printStackTrace();
+		}
 	}
 }

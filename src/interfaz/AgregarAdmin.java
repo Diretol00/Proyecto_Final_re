@@ -25,7 +25,6 @@ public class AgregarAdmin extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_2;
 	private JButton btnNewButton;
-	private JLabel lblNewLabel_1;
 	private JPasswordField contra;
 	private JPasswordField repContra;
 	private JCheckBox chckbxNewCheckBox;
@@ -79,40 +78,11 @@ public class AgregarAdmin extends JFrame {
 		btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String usr = "root";
-					String password = "";
-					java.sql.Connection con = DriverManager.getConnection(url, usr, password);
-					Statement stm = con.createStatement();
-					
-					if(contra.getText().trim().equals(repContra.getText().trim())) {
-						stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario) values('"+textField_2.getText()+"', '"+contra.getText()+"', 'admin')");
-						lblNewLabel_1.setVisible(true);
-					}else {
-						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-					}
-					
-					con.close();
-					
-				}catch(ClassNotFoundException ex) {
-					System.out.println("Error loading the J Driver");
-				}catch (SQLException f) {
-					System.out.println("Error connecting to DB");
-					f.printStackTrace();
-				}
+				AgregarAdmin();
 			}
 		});
-		btnNewButton.setBounds(10, 116, 113, 23);
+		btnNewButton.setBounds(10, 127, 113, 23);
 		contentPane.add(btnNewButton);
-		
-		lblNewLabel_1 = new JLabel("Agregado con exito!");
-		lblNewLabel_1.setVisible(false);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1.setForeground(Color.GREEN);
-		lblNewLabel_1.setBounds(10, 150, 249, 14);
-		contentPane.add(lblNewLabel_1);
 		
 		contra = new JPasswordField();
 		contra.setBounds(133, 48, 126, 20);
@@ -134,6 +104,34 @@ public class AgregarAdmin extends JFrame {
 		});
 		chckbxNewCheckBox.setBounds(271, 47, 128, 23);
 		contentPane.add(chckbxNewCheckBox);
+	}
+	
+	
+	
+	public void AgregarAdmin() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			
+			if(contra.getText().trim().equals(repContra.getText().trim())) {
+				stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario) values('"+textField_2.getText()+"', '"+contra.getText()+"', 'admin')");
+				JOptionPane.showMessageDialog(null, "Este admin ha sido agregado correctamente");
+			}else {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+			}
+			
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+			System.out.println("Error loading the J Driver");
+		}catch (SQLException f) {
+			System.out.println("Error connecting to DB");
+			f.printStackTrace();
+		}
 	}
 
 }

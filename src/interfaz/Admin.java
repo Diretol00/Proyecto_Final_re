@@ -77,6 +77,7 @@ public class Admin extends JFrame {
 				
 				
 				frameuser.setVisible(true);
+				frameuser.setLocationRelativeTo(null);
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);

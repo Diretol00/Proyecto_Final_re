@@ -131,6 +131,11 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		contentPane.add(btncomprar);
 		
 		JButton btncancel = new JButton("Cancelar");
+		btncancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		btncancel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btncancel.setBounds(206, 422, 164, 36);
 		contentPane.add(btncancel);

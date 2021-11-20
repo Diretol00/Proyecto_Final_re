@@ -33,6 +33,8 @@ public class Inventario extends JFrame {
 	public ModificarProducto modificar = new ModificarProducto();
 	public EliminarProducto eliminar = new EliminarProducto();
 	private JTable table;
+	JButton filtroMarca;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -56,38 +58,10 @@ public class Inventario extends JFrame {
 	 * Create the frame.
 	 */
 	public Inventario() {
-		modelo.setRowCount(0);
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			String url = "jdbc:mysql://localhost/proyectofinal";
-			String us = "root";
-			String pw = "";
-			
-			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-			
-			java.sql.Statement stm = cnn.createStatement();
 		
-			ResultSet rs =  stm.executeQuery("select * from producto");
+		Actualizar();
 		
-			while(rs.next()==true) {
-				String id = rs.getString("id_producto");
-				String nombre = rs.getString("nombre");
-				String precio = rs.getString("precio");
-				String marca = rs.getString("marca");
-				String modeloT = rs.getString("modelo");
-				String existencias = rs.getString("existencias");
-				
-				
-				modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
-			}
-				
-				cnn.close();
-			}
-				catch(ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}catch(SQLException i) {
-					i.printStackTrace();
-			}
+		
 		setTitle("Inventario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 546, 496);
@@ -115,42 +89,11 @@ public class Inventario extends JFrame {
 		table.setModel(modelo);
 		scrollPane_1.setViewportView(table);
 		
-		JButton filtroMarca = new JButton("Filtrar por marca\r\n");
+		filtroMarca = new JButton("Filtrar por marca\r\n");
 		filtroMarca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelo.setRowCount(0);
-				String marcaFiltro = JOptionPane.showInputDialog("Inserte marca");
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-					java.sql.Statement stm = cnn.createStatement();
+				FiltrarMarca();
 				
-					ResultSet rs =  stm.executeQuery("select * from producto where marca='"+marcaFiltro+"'");
-				
-					while(rs.next()==true) {
-						String id = rs.getString("id_producto");
-						String nombre = rs.getString("nombre");
-						String precio = rs.getString("precio");
-						String marca = rs.getString("marca");
-						String modeloT = rs.getString("modelo");
-						String existencias = rs.getString("existencias");
-						
-						modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
-					}
-						lblfiltro.setText("Filtrando por marca: " + marcaFiltro);
-						lblfiltro.setVisible(true);
-						cnn.close();
-					}
-						catch(ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}catch(SQLException i) {
-							i.printStackTrace();
-					}
 			}
 		});
 		filtroMarca.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -160,38 +103,7 @@ public class Inventario extends JFrame {
 		JButton filtroPrecio = new JButton("Filtrar por precio\r\n");
 		filtroPrecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelo.setRowCount(0);
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-					java.sql.Statement stm = cnn.createStatement();
-				
-					ResultSet rs =  stm.executeQuery("select * from producto order by precio ASC");
-				
-					while(rs.next()==true) {
-						String id = rs.getString("id_producto");
-						String nombre = rs.getString("nombre");
-						String precio = rs.getString("precio");
-						String marca = rs.getString("marca");
-						String modeloT = rs.getString("modelo");
-						String existencias = rs.getString("existencias");
-						
-						modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
-					}
-						lblfiltro.setText("Filtrando por precio: Mas barato a mas caro");
-						lblfiltro.setVisible(true);
-						cnn.close();
-					}
-						catch(ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}catch(SQLException i) {
-							i.printStackTrace();
-					}
+				FiltrarPrecio();
 			}
 		});
 		filtroPrecio.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -201,38 +113,8 @@ public class Inventario extends JFrame {
 		JButton btneliminarf = new JButton("Eliminar filtro");
 		btneliminarf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelo.setRowCount(0);
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-					java.sql.Statement stm = cnn.createStatement();
-				
-					ResultSet rs =  stm.executeQuery("select * from producto");
-				
-					while(rs.next()==true) {
-						String id = rs.getString("id_producto");
-						String nombre = rs.getString("nombre");
-						String precio = rs.getString("precio");
-						String marca = rs.getString("marca");
-						String modeloT = rs.getString("modelo");
-						String existencias = rs.getString("existencias");
-						
-						
-						modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
-					}
-						
-						cnn.close();
-					}
-						catch(ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}catch(SQLException i) {
-							i.printStackTrace();
-					}
+				Actualizar();
+				lblfiltro.setText("");
 			}
 		});
 		btneliminarf.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -242,38 +124,8 @@ public class Inventario extends JFrame {
 		JButton btnactualizar = new JButton("Actualizar");
 		btnactualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modelo.setRowCount(0);
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-					java.sql.Statement stm = cnn.createStatement();
-				
-					ResultSet rs =  stm.executeQuery("select * from producto");
-				
-					while(rs.next()==true) {
-						String id = rs.getString("id_producto");
-						String nombre = rs.getString("nombre");
-						String precio = rs.getString("precio");
-						String marca = rs.getString("marca");
-						String modeloT = rs.getString("modelo");
-						String existencias = rs.getString("existencias");
-						
-						
-						modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
-					}
-						
-						cnn.close();
-					}
-						catch(ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}catch(SQLException i) {
-							i.printStackTrace();
-					}
+				Actualizar();
+				lblfiltro.setText("");
 			}
 		});
 		btnactualizar.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -319,5 +171,116 @@ public class Inventario extends JFrame {
 		btneliminar.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btneliminar.setBounds(42, 94, 173, 32);
 		panel2.add(btneliminar);
+	}
+	
+	
+	public void FiltrarMarca() {
+		
+		modelo.setRowCount(0);
+		String marcaFiltro = JOptionPane.showInputDialog("Inserte marca");
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
+			java.sql.Statement stm = cnn.createStatement();
+		
+			ResultSet rs =  stm.executeQuery("select * from producto where marca='"+marcaFiltro+"'");
+		
+			while(rs.next()==true) {
+				String id = rs.getString("id_producto");
+				String nombre = rs.getString("nombre");
+				String precio = rs.getString("precio");
+				String marca = rs.getString("marca");
+				String modeloT = rs.getString("modelo");
+				String existencias = rs.getString("existencias");
+				
+				modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
+			}
+				lblfiltro.setText("Filtrando por marca: " + marcaFiltro);
+				lblfiltro.setVisible(true);
+				cnn.close();
+			}
+				catch(ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}catch(SQLException i) {
+					i.printStackTrace();
+			}
+	}
+	
+	
+	public void FiltrarPrecio() {
+		modelo.setRowCount(0);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
+			java.sql.Statement stm = cnn.createStatement();
+		
+			ResultSet rs =  stm.executeQuery("select * from producto order by precio ASC");
+		
+			while(rs.next()==true) {
+				String id = rs.getString("id_producto");
+				String nombre = rs.getString("nombre");
+				String precio = rs.getString("precio");
+				String marca = rs.getString("marca");
+				String modeloT = rs.getString("modelo");
+				String existencias = rs.getString("existencias");
+				
+				modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
+			}
+				lblfiltro.setText("Filtrando por precio: Mas barato a mas caro");
+				lblfiltro.setVisible(true);
+				cnn.close();
+			}
+				catch(ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}catch(SQLException i) {
+					i.printStackTrace();
+			}
+	}
+	
+	
+	
+	public void Actualizar() {
+		modelo.setRowCount(0);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
+			java.sql.Statement stm = cnn.createStatement();
+		
+			ResultSet rs =  stm.executeQuery("select * from producto");
+		
+			while(rs.next()==true) {
+				String id = rs.getString("id_producto");
+				String nombre = rs.getString("nombre");
+				String precio = rs.getString("precio");
+				String marca = rs.getString("marca");
+				String modeloT = rs.getString("modelo");
+				String existencias = rs.getString("existencias");
+				
+				
+				modelo.addRow(new Object[] {id, nombre, "US$"+precio, marca, modeloT, existencias});
+			}
+				
+				cnn.close();
+			}
+				catch(ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}catch(SQLException i) {
+					i.printStackTrace();
+			}
 	}
 }

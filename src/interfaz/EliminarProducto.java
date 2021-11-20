@@ -74,43 +74,8 @@ public class EliminarProducto extends JFrame {
 		JButton btndelete = new JButton("Eliminar");
 		btndelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					String query = "Delete from producto where id_producto = '"+txtid.getText()+"'";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-				java.sql.Statement stm = cnn.createStatement();
-				java.sql.Statement stm2 = cnn.createStatement();
+				EliminarProducto();
 				
-				ResultSet rs =  stm.executeQuery("Select * from producto"
-						+ " where id_producto = '"+txtid.getText()+"'");
-				
-				if(rs.next()==true) {
-					int opt = JOptionPane.showConfirmDialog(null,"¿Estás seguro que quieres eliminar"
-							+ " este producto?","Selecciona si o no", JOptionPane.YES_NO_OPTION);
-					if(opt == 0) {
-						stm2.executeUpdate(query);
-						JOptionPane.showMessageDialog(null, "El producto fue eliminado"
-								+ " exitosamente");
-						
-						txtid.setText(null);
-					}
-				}else {
-					lblconf.setText("Este producto no existe");
-				}
-					
-					cnn.close();
-				}
-					catch(ClassNotFoundException e1) {
-						e1.printStackTrace();
-					}catch(SQLException i) {
-						i.printStackTrace();
-					}
 			}
 		});
 		btndelete.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -120,6 +85,49 @@ public class EliminarProducto extends JFrame {
 		lblconf = new JLabel("");
 		lblconf.setBounds(21, 72, 215, 24);
 		contentPane.add(lblconf);
+	}
+	
+	
+	
+	
+	public void EliminarProducto() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			String query = "Delete from producto where id_producto = '"+txtid.getText()+"'";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
+		java.sql.Statement stm = cnn.createStatement();
+		java.sql.Statement stm2 = cnn.createStatement();
+		
+		ResultSet rs =  stm.executeQuery("Select * from producto"
+				+ " where id_producto = '"+txtid.getText()+"'");
+		
+		if(rs.next()==true) {
+			int opt = JOptionPane.showConfirmDialog(null,"¿Estás seguro que quieres eliminar"
+					+ " este producto?","Selecciona si o no", JOptionPane.YES_NO_OPTION);
+			if(opt == 0) {
+				stm2.executeUpdate(query);
+				JOptionPane.showMessageDialog(null, "El producto fue eliminado"
+						+ " exitosamente");
+				
+				txtid.setText(null);
+			}
+		}else {
+			lblconf.setText("Este producto no existe");
+		}
+			
+			cnn.close();
+		}
+			catch(ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}catch(SQLException i) {
+				i.printStackTrace();
+			}
 	}
 
 }

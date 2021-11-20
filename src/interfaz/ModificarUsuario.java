@@ -32,7 +32,7 @@ public class ModificarUsuario extends JFrame {
 	private JPasswordField txtpass;
 	private JTextField txtnom;
 	private JTextField txtid;
-	public JLabel lblNewLabel;
+	JComboBox cb;
 
 	/**
 	 * Launch the application.
@@ -88,7 +88,7 @@ public class ModificarUsuario extends JFrame {
 		lblrepass.setBounds(10, 118, 133, 26);
 		panel1.add(lblrepass);
 		
-		JComboBox cb = new JComboBox();
+		cb = new JComboBox();
 		cb.setModel(new DefaultComboBoxModel(new String[] {"admin", "cliente"}));
 		cb.setBounds(10, 154, 133, 26);
 		panel1.add(cb);
@@ -129,47 +129,7 @@ public class ModificarUsuario extends JFrame {
 		JButton btnalter = new JButton("Modificar");
 		btnalter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					
-				
-				java.sql.Statement stm = cnn.createStatement();
-				
-				ResultSet rs =  stm.executeQuery("Select * from usuario"
-						+ " where id_usuario = '"+txtid.getText()+"'");
-				
-				if(rs.next()==true) {
-					if(txtpass.getText().trim().equals(txtrepass.getText().trim())) {
-					stm.executeUpdate("Update usuario set nombre_usuario = '"+txtnom.getText()+"',"
-						+ "contrasenha = '"+txtpass.getText()+"',tipo_usuario = '"+cb.getSelectedItem()+"'"
-								+ "where id_usuario = '"+txtid.getText()+"'");
-				
-				JOptionPane.showMessageDialog(panel1, "Se ha modificado el usuario correctamente");	
-				
-				txtid.setText(null);
-				txtnom.setText(null);
-				txtpass.setText(null);
-				txtrepass.setText(null);
-					}else {
-						JOptionPane.showMessageDialog(panel1, "Las contraseñas no coinciden");
-					}
-				}else {
-					JOptionPane.showMessageDialog(panel1, "Lo sentimos, no se ha podido modificar debido"
-							+ " a que este usuario parece no existir");	
-				}
-					lblNewLabel.setVisible(false);
-					cnn.close();
-				}
-					catch(ClassNotFoundException e1) {
-						e1.printStackTrace();
-					}catch(SQLException i) {
-						i.printStackTrace();
-					}
+				Modificar();
 			}
 		});
 		btnalter.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -179,41 +139,92 @@ public class ModificarUsuario extends JFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String usr = "root";
-					String password = "";
-					java.sql.Connection con = DriverManager.getConnection(url, usr, password);
-					Statement stm = con.createStatement();
-					ResultSet rs = stm.executeQuery("select * from usuario where id_usuario='"+txtid.getText()+"'");
-					
-					if(rs.next()) {
-						txtid.setText(rs.getString("id_usuario"));
-						txtnom.setText(rs.getString("nombre_usuario"));
-						txtpass.setText(rs.getString("contrasenha"));
-						txtrepass.setText(rs.getString("contrasenha"));
-						cb.setSelectedItem(rs.getString("tipo_usuario"));
-					}
-					lblNewLabel.setVisible(true);
-					con.close();
-					
-				}catch(ClassNotFoundException ex) {
-				}catch (SQLException f) {
-					f.printStackTrace();
-				}
+				Buscar();
 			}
 		});
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnBuscar.setBounds(153, 199, 133, 31);
 		panel1.add(btnBuscar);
+	}
+	
+	
+	
+	
+	public void Modificar() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			
 		
-		lblNewLabel = new JLabel("Se ha encontrado con exito!");
-		lblNewLabel.setVisible(false);
-		lblNewLabel.setForeground(Color.CYAN);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setBounds(163, 160, 163, 14);
-		panel1.add(lblNewLabel);
+		java.sql.Statement stm = cnn.createStatement();
+		
+		ResultSet rs =  stm.executeQuery("Select * from usuario"
+				+ " where id_usuario = '"+txtid.getText()+"'");
+		
+		if(rs.next()==true) {
+			if(txtpass.getText().trim().equals(txtrepass.getText().trim())) {
+			stm.executeUpdate("Update usuario set nombre_usuario = '"+txtnom.getText()+"',"
+				+ "contrasenha = '"+txtpass.getText()+"',tipo_usuario = '"+cb.getSelectedItem()+"'"
+						+ "where id_usuario = '"+txtid.getText()+"'");
+		
+		JOptionPane.showMessageDialog(null, "Se ha modificado el usuario correctamente");	
+		
+		txtid.setText(null);
+		txtnom.setText(null);
+		txtpass.setText(null);
+		txtrepass.setText(null);
+			}else {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Lo sentimos, no se ha podido modificar debido"
+					+ " a que este usuario parece no existir");	
+		}
+			
+			cnn.close();
+		}
+			catch(ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}catch(SQLException i) {
+				i.printStackTrace();
+			}
+	}
+	
+	
+	
+	
+	public void Buscar() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("select * from usuario where id_usuario='"+txtid.getText()+"'");
+			
+			if(rs.next()) {
+				txtid.setText(rs.getString("id_usuario"));
+				txtnom.setText(rs.getString("nombre_usuario"));
+				txtpass.setText(rs.getString("contrasenha"));
+				txtrepass.setText(rs.getString("contrasenha"));
+				cb.setSelectedItem(rs.getString("tipo_usuario"));
+				
+				JOptionPane.showMessageDialog(null, "Encontrado con éxito");
+			}else {
+				JOptionPane.showMessageDialog(null, "Al parecer no existe este usuario, por favor intente de nuevo");
+			}
+			
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+		}catch (SQLException f) {
+			f.printStackTrace();
+		}
 	}
 
 }

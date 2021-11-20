@@ -25,6 +25,8 @@ public class AgregarUsuario extends JFrame {
 	private JTextField txtnom;
 	private JPasswordField txtpass;
 	private JPasswordField txtrepass;
+	JPanel panel1;
+	JComboBox cb;
 
 	/**
 	 * Launch the application.
@@ -55,7 +57,7 @@ public class AgregarUsuario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel1 = new JPanel();
+		panel1 = new JPanel();
 		panel1.setBounds(0, 0, 492, 253);
 		contentPane.add(panel1);
 		panel1.setLayout(null);
@@ -75,7 +77,7 @@ public class AgregarUsuario extends JFrame {
 		lblrepass.setBounds(10, 106, 133, 26);
 		panel1.add(lblrepass);
 		
-		JComboBox cb = new JComboBox();
+		cb = new JComboBox();
 		cb.setModel(new DefaultComboBoxModel(new String[] {"admin", "cliente"}));
 		cb.setBounds(10, 153, 133, 26);
 		panel1.add(cb);
@@ -111,38 +113,45 @@ public class AgregarUsuario extends JFrame {
 		JButton btnadd = new JButton("Agregar");
 		btnadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String usr = "root";
-					String password = "";
-					java.sql.Connection con = DriverManager.getConnection(url, usr, password);
-					Statement stm = con.createStatement();
-					
-					if(txtpass.getText().trim().equals(txtrepass.getText().trim())) {
-						stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario)"
-								+ " values('"+txtnom.getText()+"', '"+txtpass.getText()+"', "
-										+ "'"+cb.getSelectedItem()+"')");
-						JOptionPane.showMessageDialog(panel1, "Este usuario ha sido agregado correctamente");
-						
-						txtnom.setText(null);
-						txtpass.setText(null);
-						txtrepass.setText(null);
-						
-					}else {
-						JOptionPane.showMessageDialog(panel1, "Las contraseñas no coinciden");
-					}
-					
-					con.close();
-					
-				}catch(ClassNotFoundException ex) {
-				}catch (SQLException f) {
-					f.printStackTrace();
-				}
+				AgregarUsuario();
 			}
 		});
 		btnadd.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnadd.setBounds(168, 199, 133, 31);
 		panel1.add(btnadd);
+	}
+	
+	
+	
+	
+	public void AgregarUsuario() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			
+			if(txtpass.getText().trim().equals(txtrepass.getText().trim())) {
+				stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario)"
+						+ " values('"+txtnom.getText()+"', '"+txtpass.getText()+"', "
+								+ "'"+cb.getSelectedItem()+"')");
+				JOptionPane.showMessageDialog(panel1, "Este usuario ha sido agregado correctamente");
+				
+				txtnom.setText(null);
+				txtpass.setText(null);
+				txtrepass.setText(null);
+				
+			}else {
+				JOptionPane.showMessageDialog(panel1, "Las contraseñas no coinciden");
+			}
+			
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+		}catch (SQLException f) {
+			f.printStackTrace();
+		}
 	}
 }

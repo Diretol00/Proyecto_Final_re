@@ -30,7 +30,6 @@ public class AgregarProducto extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	public JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -119,38 +118,39 @@ public class AgregarProducto extends JFrame {
 		JButton btnadd = new JButton("Agregar");
 		btnadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String usr = "root";
-					String password = "";
-					java.sql.Connection con = DriverManager.getConnection(url, usr, password);
-					Statement stm = con.createStatement();
-					
-					stm.executeUpdate("INSERT INTO producto(nombre, precio, marca, modelo, existencias) values ('"+textField.getText()+"', '"+textField_1.getText()+"', '"+textField_2.getText()+"', '"+textField_3.getText()+"', '"+textField_4.getText()+"')");
-					lblNewLabel.setVisible(true);
-					textField.setText("");
-					textField_1.setText("");
-					textField_2.setText("");
-					textField_3.setText("");
-					textField_4.setText("");
-					con.close();
-					
-				}catch(ClassNotFoundException ex) {
-				}catch (SQLException f) {
-					f.printStackTrace();
-				}
+				AgregarProducto();
 			}
 		});
 		btnadd.setBounds(10, 211, 133, 31);
 		panel1.add(btnadd);
 		btnadd.setFont(new Font("Tahoma", Font.BOLD, 13));
-		
-		lblNewLabel = new JLabel("Agregado con exito!");
-		lblNewLabel.setVisible(false);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setForeground(Color.GREEN);
-		lblNewLabel.setBounds(155, 216, 227, 26);
-		panel1.add(lblNewLabel);
 	}
+	
+	
+	
+	
+	public void AgregarProducto() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String usr = "root";
+			String password = "";
+			java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+			Statement stm = con.createStatement();
+			
+			stm.executeUpdate("INSERT INTO producto(nombre, precio, marca, modelo, existencias) values ('"+textField.getText()+"', '"+textField_1.getText()+"', '"+textField_2.getText()+"', '"+textField_3.getText()+"', '"+textField_4.getText()+"')");
+			JOptionPane.showMessageDialog(null, "Este producto ha sido agregado correctamente");
+			textField.setText("");
+			textField_1.setText("");
+			textField_2.setText("");
+			textField_3.setText("");
+			textField_4.setText("");
+			con.close();
+			
+		}catch(ClassNotFoundException ex) {
+		}catch (SQLException f) {
+			f.printStackTrace();
+		}
+	}
+	
 }

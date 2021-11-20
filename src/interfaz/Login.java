@@ -120,48 +120,7 @@ public class Login extends JFrame {
 		btningresar = new JButton("Ingresar");
 		btningresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean validAdmins = false;
-				boolean validUsers = false;
-				
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					String url = "jdbc:mysql://localhost/proyectofinal";
-					String us = "root";
-					String pw = "";
-					
-					java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
-					java.sql.Statement stm = cnn.createStatement();
-					java.sql.Statement stm_users = cnn.createStatement();
-					ResultSet rs_admins =  stm.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='admin'");
-					ResultSet rs_users =  stm_users.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='cliente'");
-					
-					if(rs_admins.next()) {
-						validAdmins = true;
-						if(validAdmins == true) {
-							admin.setVisible(true);
-							admin.setLocationRelativeTo(null);
-						}
-					}else {
-						if(rs_users.next()) {
-							validUsers = true;
-							if(validUsers == true) {
-								home.setVisible(true);
-								home.setLocationRelativeTo(null);
-							}
-						}else {
-							JOptionPane.showMessageDialog(null, "Usuario no existe!");
-						}
-					}
-					userName = txtuser.getText();
-					home.lblNewLabel_2_1.setText(userName);
-					admin.lblNewLabel_2_1.setText(userName);
-					cnn.close();
-				}
-					catch(ClassNotFoundException x) {
-						x.printStackTrace();
-					}catch(SQLException f) {
-						f.printStackTrace();
-					}
+				Ingresar();
 			}
 		});
 		btningresar.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -181,5 +140,52 @@ public class Login extends JFrame {
 		txtpass = new JPasswordField();
 		txtpass.setBounds(137, 252, 202, 32);
 		panel1.add(txtpass);
+	}
+	
+	
+	
+	public void Ingresar() {
+		boolean validAdmins = false;
+		boolean validUsers = false;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost/proyectofinal";
+			String us = "root";
+			String pw = "";
+			
+			java.sql.Connection cnn = DriverManager.getConnection(url,us,pw);
+			java.sql.Statement stm = cnn.createStatement();
+			java.sql.Statement stm_users = cnn.createStatement();
+			ResultSet rs_admins =  stm.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='admin'");
+			ResultSet rs_users =  stm_users.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='cliente'");
+			
+			if(rs_admins.next()) {
+				validAdmins = true;
+				if(validAdmins == true) {
+					admin.setVisible(true);
+					admin.setLocationRelativeTo(null);
+				}
+			}else {
+				if(rs_users.next()) {
+					validUsers = true;
+					if(validUsers == true) {
+						home.setVisible(true);
+						home.setLocationRelativeTo(null);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Usuario no existe!");
+				}
+			}
+			userName = txtuser.getText();
+			home.lblNewLabel_2_1.setText(userName);
+			admin.lblNewLabel_2_1.setText(userName);
+			cnn.close();
+		}
+			catch(ClassNotFoundException x) {
+				x.printStackTrace();
+			}catch(SQLException f) {
+				f.printStackTrace();
+			}
 	}
 }
