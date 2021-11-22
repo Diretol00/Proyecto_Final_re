@@ -109,12 +109,10 @@ public class Carrito extends JFrame {
 		            	lista_p.add("$"+ precio);
 		            	lista_m.add(marca);
 		            	lista_mod.add(modelof);
-		            	
-		            	
-//		            	System.out.println("");
+
 		            	ce.bMsg = "-------- Factura --------\n" + "Productos: " + lista_n.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Precios: " + lista_p.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Marca: " + lista_m.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Modelos: " + lista_mod.toString().replaceAll("[\\[\\](){}]", "") + "\n-------------------------\n" + "Gracias por confiar en Mobile Paradise\n" + "Fecha de compra: "+format.format(date);
 					}
-					
+					Carrito.this.dispose();
 					cnn.close();
 				}
 					catch(ClassNotFoundException e1) {

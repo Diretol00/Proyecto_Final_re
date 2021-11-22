@@ -123,7 +123,12 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		JButton btncomprar = new JButton("Comprar");
 		btncomprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				enviar(txtcorreo.getText(), bMsg);	
+				enviar(txtcorreo.getText(), bMsg);
+				txtcorreo.setText("");
+				txtarjeta.setText("");
+				txtexp.setText("");
+				txtcvv.setText("");
+				ConfirmarCompra.this.dispose();
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 12));

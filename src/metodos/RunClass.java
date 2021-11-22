@@ -8,7 +8,6 @@ public class RunClass {
 		Login setup = new Login();
 		setup.setVisible(true);
 		setup.setLocationRelativeTo(null);
-//		System.out.print("Testing");
 	}
 
 }
