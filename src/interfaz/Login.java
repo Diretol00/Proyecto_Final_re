@@ -180,6 +180,8 @@ public class Login extends JFrame {
 			userName = txtuser.getText();
 			home.lblNewLabel_2_1.setText(userName);
 			admin.lblNewLabel_2_1.setText(userName);
+			txtuser.setText("");
+			txtpass.setText("");
 			cnn.close();
 		}
 			catch(ClassNotFoundException x) {

@@ -38,6 +38,7 @@ public class Carrito extends JFrame {
 	public String precio;
 	public String marca;
 	public String modelof;
+	public int total = 0;
 	public SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	public Date date = new Date();
 	public ArrayList<String> lista_n = new ArrayList<String>();
@@ -109,9 +110,11 @@ public class Carrito extends JFrame {
 		            	lista_p.add("$"+ precio);
 		            	lista_m.add(marca);
 		            	lista_mod.add(modelof);
-
-		            	ce.bMsg = "-------- Factura --------\n" + "Productos: " + lista_n.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Precios: " + lista_p.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Marca: " + lista_m.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Modelos: " + lista_mod.toString().replaceAll("[\\[\\](){}]", "") + "\n-------------------------\n" + "Gracias por confiar en Mobile Paradise\n" + "Fecha de compra: "+format.format(date);
+		            	total += Integer.parseInt(precio);
+		            	
+		            	ce.bMsg = "-------- Factura --------\n" + "Productos: " + lista_n.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Precios: " + lista_p.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Marca: " + lista_m.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Modelos: " + lista_mod.toString().replaceAll("[\\[\\](){}]", "") + "\nTotal de compra: $" + total + "\n-------------------------\n" + "Gracias por confiar en Mobile Paradise\n" + "Fecha de compra: "+format.format(date);
 					}
+					System.out.println(total);
 					Carrito.this.dispose();
 					cnn.close();
 				}
