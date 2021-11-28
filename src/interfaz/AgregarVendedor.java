@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JCheckBox;
 
-public class AgregarCliente extends JFrame {
+public class AgregarVendedor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -37,7 +37,7 @@ public class AgregarCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarCliente frame = new AgregarCliente();
+					AgregarVendedor frame = new AgregarVendedor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class AgregarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AgregarCliente() {
+	public AgregarVendedor() {
 		setTitle("Agregar Cliente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 421, 212);
@@ -79,7 +79,7 @@ public class AgregarCliente extends JFrame {
 		JButton btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarCliente();
+				AgregarVendedor();
 			}
 		});
 		btnNewButton.setBounds(10, 131, 113, 23);
@@ -110,7 +110,7 @@ public class AgregarCliente extends JFrame {
 	
 	
 	
-	public void AgregarCliente() {
+	public void AgregarVendedor() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost/proyectofinal";
@@ -120,7 +120,7 @@ public class AgregarCliente extends JFrame {
 			Statement stm = con.createStatement();
 			
 			if(contra.getText().trim().equals(repContra.getText().trim())) {
-				stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario) values('"+textField.getText()+"', '"+contra.getText()+"', 'cliente')");
+				stm.executeUpdate("INSERT INTO usuario(nombre_usuario, contrasenha, tipo_usuario) values('"+textField.getText()+"', '"+contra.getText()+"', 'vendedor')");
 				JOptionPane.showMessageDialog(null, "Este cliente ha sido agregado correctamente");
 			}else {
 				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");

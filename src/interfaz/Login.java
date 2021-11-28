@@ -34,7 +34,7 @@ public class Login extends JFrame {
 	private JButton btncancelar;
 	public Admin admin = new Admin();
 	public Home home = new Home();
-	public AgregarCliente agregarCliente = new AgregarCliente();
+	public AgregarVendedor agregarCliente = new AgregarVendedor();
 	public AgregarAdmin agregarAdministrador = new AgregarAdmin();
 	public String userName;
 	private JPasswordField txtpass;
@@ -70,7 +70,7 @@ public class Login extends JFrame {
 		JMenu mnNewMenu = new JMenu("Registrar");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Cliente");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Vendedor");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregarCliente.setVisible(true);
@@ -158,7 +158,7 @@ public class Login extends JFrame {
 			java.sql.Statement stm = cnn.createStatement();
 			java.sql.Statement stm_users = cnn.createStatement();
 			ResultSet rs_admins =  stm.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='admin'");
-			ResultSet rs_users =  stm_users.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='cliente'");
+			ResultSet rs_users =  stm_users.executeQuery("select * from usuario where nombre_usuario='"+txtuser.getText()+"' and contrasenha='"+txtpass.getText()+"' and tipo_usuario='vendedor'");
 			
 			if(rs_admins.next()) {
 				validAdmins = true;

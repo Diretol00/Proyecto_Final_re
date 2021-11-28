@@ -89,7 +89,7 @@ public class ModificarUsuario extends JFrame {
 		panel1.add(lblrepass);
 		
 		cb = new JComboBox();
-		cb.setModel(new DefaultComboBoxModel(new String[] {"admin", "cliente"}));
+		cb.setModel(new DefaultComboBoxModel(new String[] {"admin", "vendedor"}));
 		cb.setBounds(10, 154, 133, 26);
 		panel1.add(cb);
 		

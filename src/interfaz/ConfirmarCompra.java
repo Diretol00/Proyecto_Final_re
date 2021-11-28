@@ -36,7 +36,8 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 	private JScrollPane scrollPane;
 	public JTable table;
 	public String bMsg;
-	public static int cont, cont1;
+	public static int cont1 = 0;
+	public String b_nombre,b_precio,b_modelo,b_marca;
 	
 	public DefaultTableModel modelo = new DefaultTableModel() {
 		 public boolean isCellEditable(int row, int column) {
@@ -120,15 +121,33 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		txtcvv.setBounds(197, 133, 130, 26);
 		panel2.add(txtcvv);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 10, 352, 205);
+		contentPane.add(scrollPane);
+		
+		table = new JTable(modelo);
+		scrollPane.setViewportView(table);
+		modelo.addColumn("Nombre");
+		modelo.addColumn("Precio");
+		modelo.addColumn("Marca");
+		modelo.addColumn("Modelo");
+		
+		
+		
 		JButton btncomprar = new JButton("Comprar");
 		btncomprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cont1 = table.getRowCount();
+				System.out.println(cont1);
+				LlenarFactura();
 				enviar(txtcorreo.getText(), bMsg);
 				txtcorreo.setText("");
 				txtarjeta.setText("");
 				txtexp.setText("");
 				txtcvv.setText("");
+
 				ConfirmarCompra.this.dispose();
+				
 			}
 		});
 		btncomprar.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -146,19 +165,13 @@ public class ConfirmarCompra extends JFrame implements EnviarCorreo {
 		contentPane.add(btncancel);
 		
 		lblusern = new JLabel("");
+		lblusern.setVisible(false);
 		lblusern.setBounds(311, 10, 73, 23);
 		contentPane.add(lblusern);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 10, 352, 205);
-		contentPane.add(scrollPane);
 		
-		table = new JTable(modelo);
-		scrollPane.setViewportView(table);
-		modelo.addColumn("Nombre");
-		modelo.addColumn("Precio");
-		modelo.addColumn("Marca");
-		modelo.addColumn("Modelo");
+		
+		
 		
 	}
 	
@@ -212,4 +225,36 @@ public void BorrarCarrito() {
 		f.printStackTrace();
 	}
  }
+
+
+
+public void LlenarFactura() {
+	
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		String url = "jdbc:mysql://localhost/proyectofinal";
+		String usr = "root";
+		String password = "";
+		java.sql.Connection con = DriverManager.getConnection(url, usr, password);
+		java.sql.Statement stm = con.createStatement();
+		
+		
+        	if(cont1 > 0) {
+        	for(int i = 0; i < cont1; i++) {
+        	stm.executeUpdate("INSERT INTO factura(nombre_producto,precio,marca_producto,modelo_producto,vendedor,comprador)"
+					+ " values('"+table.getValueAt(i, 0)+"', '"+table.getValueAt(i, 1)+"', '"+table.getValueAt(i, 2)+"',"
+							+ " '"+table.getValueAt(i, 3)+"', '"+lblusern.getText()+"', '"+txtcorreo.getText()+"')");
+        	
+        	}
+	}
+
+		con.close();
+		
+	}catch(ClassNotFoundException ex) {
+	}catch (SQLException f) {
+		f.printStackTrace();
+	}
+
+	
+}
 }

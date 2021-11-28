@@ -6,7 +6,7 @@ public interface AccionesTablas {
 	
 	void ActualizarTablaAdmin();
 	
-	void ActualizarTablaCliente();
+	void ActualizarTablaVendedor();
 	
 	void Actualizar();
 	

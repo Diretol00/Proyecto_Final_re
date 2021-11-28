@@ -99,11 +99,11 @@ public class VerUsuario extends JFrame implements AccionesTablas{
 		btnafadmin.setBounds(10, 10, 173, 32);
 		panel1.add(btnafadmin);
 		
-		btnfcliente = new JButton("Filtrar por cliente");
+		btnfcliente = new JButton("Filtrar por vendedor");
 		btnfcliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ActualizarTablaCliente();
-				lblfiltro.setText("Usuario filtrado por cliente");
+				ActualizarTablaVendedor();
+				lblfiltro.setText("Usuario filtrado por vendedor");
 			}
 		});
 		btnfcliente.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -252,7 +252,7 @@ public class VerUsuario extends JFrame implements AccionesTablas{
 	}
 
 	@Override
-	public void ActualizarTablaCliente() {
+	public void ActualizarTablaVendedor() {
 		// TODO Auto-generated method stub
 		modelo.setRowCount(0);
 		
@@ -266,7 +266,7 @@ public class VerUsuario extends JFrame implements AccionesTablas{
 			
 		java.sql.Statement stm = cnn.createStatement();
 		
-		ResultSet rs =  stm.executeQuery("Select * from usuario where tipo_usuario = 'cliente'");
+		ResultSet rs =  stm.executeQuery("Select * from usuario where tipo_usuario = 'vendedor'");
 		
 		
 		

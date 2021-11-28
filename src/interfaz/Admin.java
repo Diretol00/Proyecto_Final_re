@@ -27,6 +27,7 @@ public class Admin extends JFrame {
 	public Image background = new ImageIcon(this.getClass().getResource("/bg.png")).getImage();
 	public JLabel lblNewLabel_2_1;
 	public VerUsuario frameuser = new VerUsuario();
+	public Factura factura = new Factura();
 
 	/**
 	 * Launch the application.
@@ -67,6 +68,15 @@ public class Admin extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Ver facturas");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				factura.setVisible(true);
+				factura.setLocationRelativeTo(null);
+			}
+		});
+		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenu mnNewMenu_1 = new JMenu("Usuarios");
 		menuBar.add(mnNewMenu_1);

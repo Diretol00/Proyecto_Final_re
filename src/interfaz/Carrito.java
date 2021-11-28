@@ -33,6 +33,7 @@ public class Carrito extends JFrame {
 	public Random rnd = new Random();
 	public DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {"Nombre", "Precio", "Marca", "Modelo"});
 	public ConfirmarCompra ce = new ConfirmarCompra();
+	JScrollPane scrollPane;
 	public JTable table;
 	public String nombre;
 	public String precio;
@@ -46,6 +47,7 @@ public class Carrito extends JFrame {
 	public ArrayList<String> lista_m = new ArrayList<String>();
 	public ArrayList<String> lista_mod = new ArrayList<String>();
 	public JLabel lblNewLabel_1;
+	public String usernn;
 	
 	Conectar conec = new Conectar();
 	
@@ -115,6 +117,8 @@ public class Carrito extends JFrame {
 		            	ce.bMsg = "-------- Factura --------\n" + "Productos: " + lista_n.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Precios: " + lista_p.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Marca: " + lista_m.toString().replaceAll("[\\[\\](){}]", "") + " \n" + "Modelos: " + lista_mod.toString().replaceAll("[\\[\\](){}]", "") + "\nTotal de compra: $" + total + "\n-------------------------\n" + "Gracias por confiar en Mobile Paradise\n" + "Fecha de compra: "+format.format(date);
 					}
 					System.out.println(total);
+					usernn = lblNewLabel_1.getText();
+					ce.lblusern.setText(usernn);
 					Carrito.this.dispose();
 					cnn.close();
 				}
@@ -136,7 +140,7 @@ public class Carrito extends JFrame {
 		lblNewLabel.setBounds(10, 11, 414, 30);
 		contentPane.add(lblNewLabel);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 52, 414, 201);
 		contentPane.add(scrollPane);
 		
