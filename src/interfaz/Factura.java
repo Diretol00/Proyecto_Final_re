@@ -299,7 +299,7 @@ public class Factura extends JFrame {
 			filaseleccionada = table.getSelectedRow();
 			
 			if(filaseleccionada == -1) {
-				JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun producto");
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna factura");
 			}else {
 				b_id = (String) table.getValueAt(filaseleccionada, 0);
 				b_nombre = (String) table.getValueAt(filaseleccionada, 1);
